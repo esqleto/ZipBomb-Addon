@@ -9,6 +9,7 @@ SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "Pistol"
+SWEP.ViewModelFOV = 100
 
 SWEP.Weight = 5
 SWEP.AutoSwitchTo = false
@@ -19,16 +20,17 @@ SWEP.SlotPos = 2
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
-SWEP.ViewModel = "models/weapons/cstrike/c_pist_deagle.mdl"
-SWEP.WorldModel = "models/weapons/cstrike/w_pist_deagle.mdl"
+SWEP.ViewModel = "models/weapons/c_medkit.mdl"
+SWEP.WorldModel = "models/weapons/w_medkit.mdl"
 
 SWEP.UseHands = true
-SWEP.ShootSound = Sound("weapons/grenade_launcher1.wav")
+SWEP.ShootSound = Sound("weapons/slam/throw.wav") 
 
 function SWEP:PrimaryAttack(ply)
-    self:SetNextPrimaryFire(CurTime() + 0.1)
+    self:SetNextPrimaryFire(CurTime() + 100)
     self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self:ThrowObj()
+
     
 
 
@@ -40,7 +42,6 @@ end
 
 function SWEP:ThrowObj()
     local owner = self:GetOwner()
-    
     if (not owner:IsValid()) then return end
     
     self:EmitSound(self.ShootSound)
@@ -51,7 +52,7 @@ function SWEP:ThrowObj()
 
     if (not ent:IsValid()) then return end
 
-    ent:SetModel("models/prop/astolfomaker/winrar/winrar.mdl")
+    ent:SetModel("models/prop/astolfomaker/winrar/winrar.mdl") 
 
     local aimvec = owner:GetAimVector()
     local pos = aimvec * 16
@@ -82,10 +83,8 @@ function SWEP:ThrowObj()
 
     cleanup.Add(owner, "props", ent)
 
-    undo.Create("Thrown_Obj")
-        undo.AddEntity(ent)
-        undo.SetPlayer(owner)
-    undo.Finish()
-
-
+    timer.Simple(2, function() 
+        owner:StripWeapon("weapon_ZipBomb")
+    end)
+    
 end

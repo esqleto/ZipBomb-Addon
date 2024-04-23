@@ -47,10 +47,11 @@ function ENT:Initialize()
 		self:EmitSound( XenGrenade_Collapse )
 		
 		timer.Simple( 4, function()
-
+			
 			local winrarball = ents.Create('prop_physics')
 			winrarball:SetModel("models/prop/astolfomaker/winrar/winrar.mdl")
 			winrarball:SetPos(pos)
+			winrarball:Spawn()
 
 			self:Remove()
 
@@ -109,6 +110,8 @@ function ENT:Think()
 		if self.StopPull then return end
 		
 		local pos = self:GetPos()
+
+
 
 		for k, v in pairs( ents.FindInSphere( pos, GetConVar( 'xengrenade_radius' ):GetInt() ) ) do
 			
@@ -199,7 +202,7 @@ function ENT:Think()
 						
 					if v:IsPlayer() then
 						
-						v:TakeDamage(10)
+						v:TakeDamage(5)
 						 
 						
 						self.Mass = self.Mass + GetConVar( 'xengrenade_maxmass' ):GetInt()
@@ -213,12 +216,12 @@ function ENT:Think()
 							plyRagdoll:Remove()
 							
 							for i, ply in ipairs( player.GetAll() ) do
-								ply:ChatPrint( v:Nick() .. " is got compressed!" )
+								ply:ChatPrint( v:Nick() .. " was compressed!" )
 							end	
 						end
 
 					end
-
+				
 				i = i + 1
 
 				end
@@ -227,7 +230,7 @@ function ENT:Think()
 
 		end
 
-		self.pull = self.pull - 25
+		self.pull = self.pull - 25 --pull
 
 		self:NextThink( CurTime() + 0.1 )
 

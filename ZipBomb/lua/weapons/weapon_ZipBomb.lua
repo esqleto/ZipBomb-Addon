@@ -27,7 +27,7 @@ SWEP.UseHands = true
 SWEP.ShootSound = Sound("weapons/slam/throw.wav") 
 
 function SWEP:PrimaryAttack(ply)
-    self:SetNextPrimaryFire(CurTime() + 100)
+    self:SetNextPrimaryFire(CurTime() + 3)
     self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self:ThrowObj()
 

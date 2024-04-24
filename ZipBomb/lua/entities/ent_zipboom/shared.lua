@@ -171,7 +171,7 @@ function ENT:Think()
 
 		for k, v in pairs( ents.FindInSphere( pos, 100 ) ) do
 
-			if ( v:IsValid() and ( v:GetClass() == 'prop_physics' or v:GetClass() == 'prop_ragdoll' ) ) or ( v:IsPlayer() and v:Alive() ) then
+			if ( v:IsValid() and ( v:GetClass() == 'prop_physics' or v:GetClass() == 'prop_ragdoll' ) ) or ( v:IsPlayer() and v:Alive() ) or (v:IsVehicle()) then
 
 				local i = 0
 

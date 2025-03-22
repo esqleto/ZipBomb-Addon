@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 -- this is just taken from this addon: https://steamcommunity.com/sharedfiles/filedetails/?id=2853437641. 
---Download their addon since they acctually know what they are doing.
+--Download their addon since they actually know what they are doing.
 
 DEFINE_BASECLASS( 'base_anim' )
 
@@ -214,10 +214,12 @@ function ENT:Think()
 							ParticleEffect( 'xen_electrical_arc_01', plyRagdoll:GetPos(), Angle( 0, 0, 0 ), plyRagdoll )
 							self:EmitSound( XenGrenade_Schlorp )
 							plyRagdoll:Remove()
+
+
 							
 							for i, ply in ipairs( player.GetAll() ) do
 								ply:ChatPrint( v:Nick() .. " was compressed!" )
-							end	
+							end
 						end
 
 					end

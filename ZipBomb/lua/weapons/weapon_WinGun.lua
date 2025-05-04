@@ -16,7 +16,7 @@ SWEP.AutoSwitchFrom = false
 
 SWEP.Slot = 1
 SWEP.SlotPos = 2
-SWEP.DrawAmmo = true
+SWEP.DrawAmmo = false 
 SWEP.DrawCrosshair = true
 
 SWEP.ViewModel = "models/weapons/cstrike/c_pist_deagle.mdl"
@@ -26,7 +26,7 @@ SWEP.UseHands = true
 SWEP.ShootSound = Sound("weapons/grenade_launcher1.wav")
 
 function SWEP:PrimaryAttack(ply)
-    self:SetNextPrimaryFire(CurTime() + 0.1)
+    self:SetNextPrimaryFire(CurTime() + 0.0001)
     self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
     self:ThrowObj( "models/prop/astolfomaker/winrar/winrar.mdl" )
     
@@ -76,7 +76,7 @@ function SWEP:ThrowObj(model_file)
         undo.SetPlayer(owner)
     undo.Finish()
 
-    timer.Simple(10, function() 
+    timer.Simple(1, function() 
         ent:Remove()
     end)
 

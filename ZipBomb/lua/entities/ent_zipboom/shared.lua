@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 -- this is just taken from this addon: https://steamcommunity.com/sharedfiles/filedetails/?id=2853437641. 
---Download their addon since they acctually know what they are doing.
+--Download their addon since they actually know what they are doing.
 
 DEFINE_BASECLASS( 'base_anim' )
 
@@ -47,10 +47,11 @@ function ENT:Initialize()
 		self:EmitSound( XenGrenade_Collapse )
 		
 		timer.Simple( 4, function()
-
+			
 			local winrarball = ents.Create('prop_physics')
 			winrarball:SetModel("models/prop/astolfomaker/winrar/winrar.mdl")
 			winrarball:SetPos(pos)
+			winrarball:Spawn()
 
 			self:Remove()
 
@@ -110,6 +111,8 @@ function ENT:Think()
 		
 		local pos = self:GetPos()
 
+
+
 		for k, v in pairs( ents.FindInSphere( pos, GetConVar( 'xengrenade_radius' ):GetInt() ) ) do
 			
 			if v:IsValid() or v:IsPlayer() then
@@ -168,7 +171,7 @@ function ENT:Think()
 
 		for k, v in pairs( ents.FindInSphere( pos, 100 ) ) do
 
-			if ( v:IsValid() and ( v:GetClass() == 'prop_physics' or v:GetClass() == 'prop_ragdoll' ) ) or ( v:IsPlayer() and v:Alive() ) then
+			if ( v:IsValid() and ( v:GetClass() == 'prop_physics' or v:GetClass() == 'prop_ragdoll' ) ) or ( v:IsPlayer() and v:Alive() ) or (v:IsVehicle()) then
 
 				local i = 0
 
@@ -199,7 +202,7 @@ function ENT:Think()
 						
 					if v:IsPlayer() then
 						
-						v:TakeDamage(10)
+						v:TakeDamage(5)
 						 
 						
 						self.Mass = self.Mass + GetConVar( 'xengrenade_maxmass' ):GetInt()
@@ -211,14 +214,16 @@ function ENT:Think()
 							ParticleEffect( 'xen_electrical_arc_01', plyRagdoll:GetPos(), Angle( 0, 0, 0 ), plyRagdoll )
 							self:EmitSound( XenGrenade_Schlorp )
 							plyRagdoll:Remove()
+
+
 							
 							for i, ply in ipairs( player.GetAll() ) do
-								ply:ChatPrint( v:Nick() .. " is got compressed!" )
-							end	
+								ply:ChatPrint( v:Nick() .. " was compressed!" )
+							end
 						end
 
 					end
-
+				
 				i = i + 1
 
 				end
@@ -227,7 +232,7 @@ function ENT:Think()
 
 		end
 
-		self.pull = self.pull - 25
+		self.pull = self.pull - 25 --pull
 
 		self:NextThink( CurTime() + 0.1 )
 
